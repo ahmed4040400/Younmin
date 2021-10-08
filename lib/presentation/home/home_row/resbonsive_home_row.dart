@@ -12,6 +12,7 @@ class ResponsiveHomeRow extends StatelessWidget {
     required this.mainTextSize,
     required this.mainTextConstraint,
     required this.subTextConstraint,
+    required this.animate,
   }) : super(key: key);
 
   final bool alignFromStart;
@@ -21,27 +22,31 @@ class ResponsiveHomeRow extends StatelessWidget {
   final double mainTextSize;
   final double mainTextConstraint;
   final double subTextConstraint;
-
+  final bool animate;
   @override
   Widget build(BuildContext context) {
     if (MediaQuery.of(context).size.width < 1200) {
       return HomeRowMobile(
-          alignFromStart: alignFromStart,
-          mainText: mainText,
-          subText: subText,
-          imageAsset: imageAsset,
-          mainTextSize: mainTextSize,
-          mainTextConstraint: mainTextConstraint,
-          subTextConstraint: subTextConstraint);
+        alignFromStart: alignFromStart,
+        mainText: mainText,
+        subText: subText,
+        imageAsset: imageAsset,
+        mainTextSize: mainTextSize,
+        mainTextConstraint: mainTextConstraint,
+        subTextConstraint: subTextConstraint,
+        animate: animate,
+      );
     } else {
       return HomeRow(
-          alignFromStart: alignFromStart,
-          mainText: mainText,
-          subText: subText,
-          imageAsset: imageAsset,
-          mainTextSize: mainTextSize,
-          mainTextConstraint: mainTextConstraint,
-          subTextConstraint: subTextConstraint);
+        alignFromStart: alignFromStart,
+        mainText: mainText,
+        subText: subText,
+        imageAsset: imageAsset,
+        mainTextSize: mainTextSize,
+        mainTextConstraint: mainTextConstraint,
+        subTextConstraint: subTextConstraint,
+        animate: animate,
+      );
     }
   }
 }

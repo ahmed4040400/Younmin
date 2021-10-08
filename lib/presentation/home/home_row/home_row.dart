@@ -14,6 +14,7 @@ class HomeRow extends StatelessWidget {
     required this.mainTextSize,
     required this.mainTextConstraint,
     required this.subTextConstraint,
+    required this.animate,
   }) : super(key: key);
 
   final bool alignFromStart;
@@ -23,6 +24,7 @@ class HomeRow extends StatelessWidget {
   final double mainTextSize;
   final double mainTextConstraint;
   final double subTextConstraint;
+  final bool animate;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class HomeRow extends StatelessWidget {
           children: alignFromStart
               ? [
                   FadeInRight(
-                    animate: true,
+                    animate: animate,
                     delay: const Duration(milliseconds: 500),
                     child: TheImage(
                       alignFromStart: alignFromStart,
@@ -44,7 +46,7 @@ class HomeRow extends StatelessWidget {
                     ),
                   ),
                   FadeInLeft(
-                    animate: true,
+                    animate: animate,
                     delay: const Duration(milliseconds: 500),
                     child: TheTexts(
                       alignFromStart: alignFromStart,
@@ -58,7 +60,7 @@ class HomeRow extends StatelessWidget {
                 ]
               : [
                   FadeInLeft(
-                    animate: true,
+                    animate: animate,
                     delay: const Duration(milliseconds: 500),
                     child: TheImage(
                       alignFromStart: alignFromStart,
@@ -66,7 +68,7 @@ class HomeRow extends StatelessWidget {
                     ),
                   ),
                   FadeInRight(
-                    animate: true,
+                    animate: animate,
                     delay: const Duration(milliseconds: 500),
                     child: TheTexts(
                       alignFromStart: alignFromStart,

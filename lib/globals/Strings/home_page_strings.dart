@@ -26,3 +26,20 @@ class HomePageStrings5 {
   static String mainText = "Get to know us more";
   static String subText = "Subscribe to out news letter";
 }
+
+// this lists to iterate through when creating the homePage rows using the list builder
+List<String> mainTextStringList = [
+  HomePageStrings1.mainText,
+  HomePageStrings2.mainText,
+  HomePageStrings3.mainText,
+  HomePageStrings4.mainText,
+  HomePageStrings5.mainText,
+];
+
+List<String> subTextStringList = [
+  HomePageStrings1.subText,
+  HomePageStrings2.subText,
+  HomePageStrings3.subText,
+  HomePageStrings4.subText,
+  HomePageStrings5.subText,
+];

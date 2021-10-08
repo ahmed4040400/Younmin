@@ -7,9 +7,11 @@ class Subscribe extends StatelessWidget {
   const Subscribe({
     Key? key,
     required this.onPressed,
+    this.animate = false,
   }) : super(key: key);
 
   final void Function() onPressed;
+  final bool animate;
 
   @override
   Widget build(BuildContext context) {

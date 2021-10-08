@@ -40,6 +40,7 @@ dependencies:
   responsive_framework: ^0.1.4
   google_fonts: ^2.1.0
   scroll_app_bar: 2.0.0
+  inview_notifier_list: ^2.0.0
 
 
 
