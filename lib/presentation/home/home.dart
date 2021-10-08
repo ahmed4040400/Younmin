@@ -1,9 +1,11 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inview_notifier_list/inview_notifier_list.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
 import 'package:sizer/sizer.dart';
 import 'package:younmin/globals/Strings/home_page_strings.dart';
+import 'package:younmin/presentation/home/subscribe.dart';
 
 import 'app_bar_buttons.dart';
 import 'home_row/resbonsive_home_row.dart';
@@ -12,7 +14,7 @@ late ScrollController scrollController = ScrollController();
 
 // to iterate through in the listBuilder and set it to true to start the animation
 // based on the order
-List<bool> animateApproveList = [true, false, false, false];
+List<bool> animateApproveList = [true, false, false, false, false];
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -53,26 +55,52 @@ class Home extends StatelessWidget {
             return deltaTop < (0.5 * vpHeight) &&
                 deltaBottom > (0.5 * vpHeight);
           },
-          itemCount: 4,
+          itemCount: 5,
           builder: (BuildContext context, int index) {
             return InViewNotifierWidget(
-                key: UniqueKey(),
-                id: index.toString(),
-                builder: (BuildContext context, bool isInView, Widget? child) {
-                  if (isInView) animateApproveList[index] = true;
-                  print(animateApproveList[index]);
-                  return ResponsiveHomeRow(
-                    animate: isInView,
-                    alignFromStart: (index + 1) % 2 != 0,
-                    mainText: mainTextStringList[index],
-                    subText: subTextStringList[index],
-                    imageAsset:
-                        AssetImage('assets/images/home/${index + 1}.png'),
-                    mainTextSize: index == 0 ? 15.sp : 10.sp,
-                    mainTextConstraint: index == 0 ? 60.w : 40.w,
-                    subTextConstraint: index == 0 ? 53.w : 35.w,
+              id: index.toString(),
+              builder: (BuildContext context, bool isInView, Widget? child) {
+                if (isInView) animateApproveList[index] = true;
+                print(animateApproveList[index]);
+                if ((index + 1) % 2 != 0 && index < 4) {
+                  return FadeInLeft(
+                    animate: animateApproveList[index],
+                    child: ResponsiveHomeRow(
+                      alignFromStart: (index + 1) % 2 != 0,
+                      mainText: mainTextStringList[index],
+                      subText: subTextStringList[index],
+                      imageAsset:
+                          AssetImage('assets/images/home/${index + 1}.png'),
+                      mainTextSize: index == 0 ? 15.sp : 10.sp,
+                      mainTextConstraint: index == 0 ? 60.w : 40.w,
+                      subTextConstraint: index == 0 ? 53.w : 35.w,
+                    ),
                   );
-                });
+                }
+                if (index < 4) {
+                  return FadeInRight(
+                    animate: animateApproveList[index],
+                    child: ResponsiveHomeRow(
+                      alignFromStart: (index + 1) % 2 != 0,
+                      mainText: mainTextStringList[index],
+                      subText: subTextStringList[index],
+                      imageAsset:
+                          AssetImage('assets/images/home/${index + 1}.png'),
+                      mainTextSize: index == 0 ? 15.sp : 10.sp,
+                      mainTextConstraint: index == 0 ? 60.w : 40.w,
+                      subTextConstraint: index == 0 ? 53.w : 35.w,
+                    ),
+                  );
+                }
+                return Padding(
+                  padding: EdgeInsets.only(bottom: 15.h),
+                  child: FadeInUp(
+                    animate: animateApproveList[index],
+                    child: Subscribe(onPressed: () {}),
+                  ),
+                );
+              },
+            );
           },
         ),
       ),

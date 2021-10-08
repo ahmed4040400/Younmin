@@ -12,7 +12,7 @@ class ResponsiveHomeRow extends StatelessWidget {
     required this.mainTextSize,
     required this.mainTextConstraint,
     required this.subTextConstraint,
-    required this.animate,
+    this.subscribe = false,
   }) : super(key: key);
 
   final bool alignFromStart;
@@ -22,9 +22,11 @@ class ResponsiveHomeRow extends StatelessWidget {
   final double mainTextSize;
   final double mainTextConstraint;
   final double subTextConstraint;
-  final bool animate;
+  final bool subscribe;
   @override
   Widget build(BuildContext context) {
+    // return a the subscribe widget if asked
+    // it's a little helpful to use with a listBuilder
     if (MediaQuery.of(context).size.width < 1200) {
       return HomeRowMobile(
         alignFromStart: alignFromStart,
@@ -34,7 +36,6 @@ class ResponsiveHomeRow extends StatelessWidget {
         mainTextSize: mainTextSize,
         mainTextConstraint: mainTextConstraint,
         subTextConstraint: subTextConstraint,
-        animate: animate,
       );
     } else {
       return HomeRow(
@@ -45,7 +46,6 @@ class ResponsiveHomeRow extends StatelessWidget {
         mainTextSize: mainTextSize,
         mainTextConstraint: mainTextConstraint,
         subTextConstraint: subTextConstraint,
-        animate: animate,
       );
     }
   }

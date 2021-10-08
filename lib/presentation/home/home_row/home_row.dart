@@ -1,4 +1,3 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -14,7 +13,6 @@ class HomeRow extends StatelessWidget {
     required this.mainTextSize,
     required this.mainTextConstraint,
     required this.subTextConstraint,
-    required this.animate,
   }) : super(key: key);
 
   final bool alignFromStart;
@@ -24,7 +22,6 @@ class HomeRow extends StatelessWidget {
   final double mainTextSize;
   final double mainTextConstraint;
   final double subTextConstraint;
-  final bool animate;
 
   @override
   Widget build(BuildContext context) {
@@ -37,47 +34,31 @@ class HomeRow extends StatelessWidget {
         child: Stack(
           children: alignFromStart
               ? [
-                  FadeInRight(
-                    animate: animate,
-                    delay: const Duration(milliseconds: 500),
-                    child: TheImage(
-                      alignFromStart: alignFromStart,
-                      imageAsset: imageAsset,
-                    ),
+                  TheImage(
+                    alignFromStart: alignFromStart,
+                    imageAsset: imageAsset,
                   ),
-                  FadeInLeft(
-                    animate: animate,
-                    delay: const Duration(milliseconds: 500),
-                    child: TheTexts(
-                      alignFromStart: alignFromStart,
-                      mainText: mainText,
-                      subText: subText,
-                      mainTextSize: mainTextSize,
-                      subTextConstraint: subTextConstraint,
-                      mainTextConstraint: mainTextConstraint,
-                    ),
+                  TheTexts(
+                    alignFromStart: alignFromStart,
+                    mainText: mainText,
+                    subText: subText,
+                    mainTextSize: mainTextSize,
+                    subTextConstraint: subTextConstraint,
+                    mainTextConstraint: mainTextConstraint,
                   ),
                 ]
               : [
-                  FadeInLeft(
-                    animate: animate,
-                    delay: const Duration(milliseconds: 500),
-                    child: TheImage(
-                      alignFromStart: alignFromStart,
-                      imageAsset: imageAsset,
-                    ),
+                  TheImage(
+                    alignFromStart: alignFromStart,
+                    imageAsset: imageAsset,
                   ),
-                  FadeInRight(
-                    animate: animate,
-                    delay: const Duration(milliseconds: 500),
-                    child: TheTexts(
-                      alignFromStart: alignFromStart,
-                      mainText: mainText,
-                      subText: subText,
-                      mainTextSize: mainTextSize,
-                      subTextConstraint: subTextConstraint,
-                      mainTextConstraint: mainTextConstraint,
-                    ),
+                  TheTexts(
+                    alignFromStart: alignFromStart,
+                    mainText: mainText,
+                    subText: subText,
+                    mainTextSize: mainTextSize,
+                    subTextConstraint: subTextConstraint,
+                    mainTextConstraint: mainTextConstraint,
                   ),
                 ],
         ),

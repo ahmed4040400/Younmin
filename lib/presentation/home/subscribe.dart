@@ -10,7 +10,7 @@ class Subscribe extends StatelessWidget {
     this.animate = false,
   }) : super(key: key);
 
-  final void Function() onPressed;
+  final void Function()? onPressed;
   final bool animate;
 
   @override
