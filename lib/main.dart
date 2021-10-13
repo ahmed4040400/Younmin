@@ -46,7 +46,11 @@ class MyApp extends StatelessWidget {
           primaryColor: YounminColors.primaryColor,
           textTheme: TextTheme(
             headline1: headline1Style,
+            headline2: headline2Style,
             headline3: headline3Style,
+            headline4: headline4Style,
+            bodyText1: body1,
+            bodyText2: body2,
           ),
           elevatedButtonTheme:
               ElevatedButtonThemeData(style: elevatedButtonStyle),
@@ -54,7 +58,7 @@ class MyApp extends StatelessWidget {
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               borderSide: BorderSide(
-                color: Color(0xff666666),
+                color: YounminColors.textFieldColor,
                 width: 1,
               ),
             ),

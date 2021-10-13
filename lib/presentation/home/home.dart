@@ -1,11 +1,15 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:auto_route/src/router/auto_router_x.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inview_notifier_list/inview_notifier_list.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
 import 'package:sizer/sizer.dart';
 import 'package:younmin/globals/Strings/home_page_strings.dart';
+import 'package:younmin/globals/YounminWidgets/login_button.dart';
+import 'package:younmin/globals/YounminWidgets/logo_button.dart';
 import 'package:younmin/presentation/home/subscribe.dart';
+import 'package:younmin/router/router.gr.dart';
 
 import 'app_bar_buttons.dart';
 import 'home_row/resbonsive_home_row.dart';
@@ -22,26 +26,30 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: ScrollAppBar(
+        automaticallyImplyLeading: false,
         controller: scrollController,
         toolbarHeight: 10.h, // double
         title: Padding(
           padding: EdgeInsets.only(top: 2.h),
-          child: Logo(
-            onPressed: () {},
-          ),
+          child: const LogoButton(),
         ),
         actions: <Widget>[
           Padding(
             padding: EdgeInsets.only(right: 2.w, top: 3.h),
-            child: SignUp(
-              onPressed: () {},
+            child: SignUpButton(
+              onPressed: () {
+                context.router.navigate(const SignUpRoute());
+              },
             ),
           ),
           Padding(
             padding: EdgeInsets.only(right: 3.w, top: 3.5.h),
-            child: Login(
-              onPressed: () {},
+            child: LoginButton(
+              onPressed: () {
+                context.router.navigate(const LoginRoute());
+              },
             ),
           ),
         ],
@@ -61,7 +69,6 @@ class Home extends StatelessWidget {
               id: index.toString(),
               builder: (BuildContext context, bool isInView, Widget? child) {
                 if (isInView) animateApproveList[index] = true;
-                print(animateApproveList[index]);
                 if ((index + 1) % 2 != 0 && index < 4) {
                   return FadeInLeft(
                     animate: animateApproveList[index],
@@ -107,71 +114,3 @@ class Home extends StatelessWidget {
     );
   }
 }
-
-//
-// ListView(
-// controller: scrollController,
-// children: [
-// Container(
-// decoration: const BoxDecoration(
-// image: DecorationImage(
-// image: AssetImage(
-// 'assets/images/home/background.png'), //?? AssetImage('assets/images/image1.jpg'),
-// fit: BoxFit.cover,
-// ),
-// ),
-// child: Column(
-// children: [
-// ResponsiveHomeRow(
-// animate: true,
-// alignFromStart: true,
-// mainText: HomePageStrings1.mainText,
-// subText: HomePageStrings1.subText,
-// imageAsset: const AssetImage('assets/images/home/1.png'),
-// mainTextSize: 15.sp,
-// mainTextConstraint: 60.w,
-// subTextConstraint: 53.w,
-// ),
-// ResponsiveHomeRow(
-// animate: true,
-// alignFromStart: false,
-// mainText: HomePageStrings2.mainText,
-// subText: HomePageStrings2.subText,
-// imageAsset: const AssetImage('assets/images/home/2.png'),
-// mainTextSize: 10.sp,
-// mainTextConstraint: 50.w,
-// subTextConstraint: 40.w,
-// ),
-// ResponsiveHomeRow(
-// animate: true,
-// alignFromStart: true,
-// mainText: HomePageStrings3.mainText,
-// subText: HomePageStrings3.subText,
-// imageAsset: const AssetImage('assets/images/home/3.png'),
-// mainTextSize: 10.sp,
-// mainTextConstraint: 35.w,
-// subTextConstraint: 30.w,
-// ),
-// ResponsiveHomeRow(
-// animate: true,
-// alignFromStart: false,
-// mainText: HomePageStrings4.mainText,
-// subText: HomePageStrings4.subText,
-// imageAsset: const AssetImage('assets/images/home/4.png'),
-// mainTextSize: 10.sp,
-// mainTextConstraint: 50.w,
-// subTextConstraint: 30.w,
-// ),
-// Padding(
-// padding: EdgeInsets.only(bottom: 15.h),
-// child: Subscribe(
-// onPressed: () {},
-// ),
-// ),
-//
-//
-// ],
-// ),
-// ),
-// ],
-// ),

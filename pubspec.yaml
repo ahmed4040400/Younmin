@@ -41,9 +41,10 @@ dependencies:
   google_fonts: ^2.1.0
   scroll_app_bar: 2.0.0
   inview_notifier_list: ^2.0.0
-
-
-
+  font_awesome_flutter: ^9.1.0
+  rolling_switch: ^0.0.2
+  syncfusion_flutter_datepicker: ^19.3.44
+  percent_indicator: ^3.4.0
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -64,6 +65,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/home/
+    - assets/images/login/
+    - assets/images/emoji/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
