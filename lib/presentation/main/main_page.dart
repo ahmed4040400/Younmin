@@ -35,6 +35,15 @@ class _MainPageState extends State<MainPage> {
           actions: [
             IconButton(
               iconSize: 10.sp,
+              splashRadius: 6.sp,
+              onPressed: () {},
+              icon: FaIcon(
+                FontAwesomeIcons.questionCircle,
+                color: YounminColors.primaryColor,
+              ),
+            ),
+            IconButton(
+              iconSize: 10.sp,
               onPressed: () {
                 showModalBottomSheet<dynamic>(
                   backgroundColor: YounminColors.backGroundColor,

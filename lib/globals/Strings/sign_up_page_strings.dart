@@ -6,7 +6,7 @@ class SignUpStrings {
   static String age = "Age";
   static String password = "Password";
   static String confirmPassword = "Confirm password";
-  static String signUp = "SignUp";
+  static String signUp = "Sign up";
   static String login = "Login";
   static String alreadyHasAccount = "Already has an account?";
 }

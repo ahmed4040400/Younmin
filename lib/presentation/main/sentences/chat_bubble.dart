@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:younmin/globals/colors.dart';
 
@@ -22,24 +23,50 @@ class ChatBubble extends StatelessWidget {
         padding: EdgeInsets.all(2.sp),
         child: ConstrainedBox(
           constraints: BoxConstraints(maxWidth: 35.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                title,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline3!
-                    .copyWith(color: Colors.white),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline3!
+                        .copyWith(color: Colors.white),
+                  ),
+                  Text(
+                    subTitle,
+                    textAlign: TextAlign.start,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2!
+                        .copyWith(color: Colors.white.withOpacity(0.5)),
+                  ),
+                ],
               ),
-              Text(
-                subTitle,
-                textAlign: TextAlign.start,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText2!
-                    .copyWith(color: Colors.white.withOpacity(0.5)),
-              ),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  IconButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {},
+                    iconSize: 5.sp,
+                    splashRadius: 5.sp,
+                    icon: FaIcon(FontAwesomeIcons.edit),
+                    color: Colors.white.withOpacity(0.5),
+                  ),
+                  IconButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {},
+                    iconSize: 5.sp,
+                    splashRadius: 5.sp,
+                    icon: FaIcon(FontAwesomeIcons.trash),
+                    color: Colors.white.withOpacity(0.5),
+                  ),
+                ],
+              )
             ],
           ),
         ),
