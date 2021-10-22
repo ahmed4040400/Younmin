@@ -46,7 +46,7 @@ class _ChooseFeelingState extends State<ChooseFeeling> {
                       BoxConstraints(minHeight: 15.sp, minWidth: 15.sp),
                   icon: Image.asset('assets/images/emoji/${index + 1}.png'),
                   onPressed: () {
-                    widget.onChoosed!(index);
+                    widget.onChoosed!(index + 1);
                     setState(() {
                       feelingsList.keys.toList().forEach((key) {
                         feelingsList[key] = false;

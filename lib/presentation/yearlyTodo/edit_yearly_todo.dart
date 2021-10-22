@@ -1,21 +1,31 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:implicitly_animated_reorderable_list/implicitly_animated_reorderable_list.dart';
 import 'package:sizer/sizer.dart';
 import 'package:younmin/globals/YounminWidgets/choose_feeling.dart';
 import 'package:younmin/globals/colors.dart';
 import 'package:younmin/logic/yearlyTodo/yearly_todo_cubit.dart';
 
-class AddYearlyTodo extends StatefulWidget {
-  const AddYearlyTodo({Key? key}) : super(key: key);
+class EditYearlyTodo extends StatefulWidget {
+  const EditYearlyTodo({Key? key, required this.taskDoc}) : super(key: key);
+
+  final QueryDocumentSnapshot<Map<String, dynamic>> taskDoc;
 
   @override
-  _AddYearlyTodoState createState() => _AddYearlyTodoState();
+  _EditYearlyTodoState createState() => _EditYearlyTodoState();
 }
 
 int feeling = 1;
 TextEditingController goalController = TextEditingController();
 
-class _AddYearlyTodoState extends State<AddYearlyTodo> {
+class _EditYearlyTodoState extends State<EditYearlyTodo> {
+  @override
+  void initState() {
+    goalController.text = widget.taskDoc['goal'];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -33,7 +43,7 @@ class _AddYearlyTodoState extends State<AddYearlyTodo> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                "Add new goal for the year",
+                "Edit your goal",
                 style: Theme.of(context)
                     .textTheme
                     .headline1!
@@ -43,7 +53,7 @@ class _AddYearlyTodoState extends State<AddYearlyTodo> {
                 children: [
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text("Add new goal for the year",
+                    child: Text("what do you wanna do for this year",
                         style: Theme.of(context)
                             .textTheme
                             .bodyText1!
@@ -93,9 +103,11 @@ class _AddYearlyTodoState extends State<AddYearlyTodo> {
               ),
               ElevatedButton(
                   onPressed: () {
-                    BlocProvider.of<YearlyTodoCubit>(context)
-                        .createNewYearlyTodo(context,
-                            goalController: goalController, feeling: feeling);
+                    BlocProvider.of<YearlyTodoCubit>(context).updateYearlyTodo(
+                        context,
+                        goalController: goalController,
+                        feeling: feeling,
+                        doc: widget.taskDoc);
                   },
                   style: ButtonStyle(
                     minimumSize: MaterialStateProperty.all<Size>(Size(
@@ -104,7 +116,7 @@ class _AddYearlyTodoState extends State<AddYearlyTodo> {
                     )),
                   ),
                   child: Text(
-                    'Add goal',
+                    'Edit goal',
                     style: Theme.of(context)
                         .textTheme
                         .headline1!

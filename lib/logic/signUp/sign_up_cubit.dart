@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+// ignore: implementation_imports
+import 'package:auto_route/src/router/auto_router_x.dart';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:file_picker/file_picker.dart';
@@ -7,6 +9,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:younmin/logic/helping_functions.dart';
+import 'package:younmin/router/router.gr.dart';
 
 part 'sign_up_state.dart';
 
@@ -29,17 +33,24 @@ class SignUpCubit extends Cubit<SignUpState> {
     required GlobalKey<FormState> formKey,
   }) async {
     if (formKey.currentState!.validate()) {
-      if (result != null) {
+      try {
         await _auth.createUserWithEmailAndPassword(
             email: emailController.text, password: passwordController.text);
-        await _auth.currentUser!.updateDisplayName(
-            "${firstNameController.text} ${lastNameController.text}");
+      } catch (err) {
+        handleFirebaseError(err, context);
+        return;
+      }
+
+      await _auth.currentUser!.updateDisplayName(
+          "${firstNameController.text} ${lastNameController.text}");
+
+      if (result != null) {
+        // if the user choosed a profile photo we handle uploading it
         final ref = FirebaseStorage.instance.ref(
-            "profileImage/${_auth.currentUser!.uid}/${result!.files.single.name}");
+            "${_auth.currentUser!.uid}/profile.${result!.files.single.extension}");
         final task = ref.putData(result!.files.single.bytes!);
 
         task.snapshotEvents.listen((event) {
-          print('listening....');
           final percent =
               event.bytesTransferred.toDouble() / event.totalBytes.toDouble();
           emit(SignUpState(
@@ -49,21 +60,15 @@ class SignUpCubit extends Cubit<SignUpState> {
           final photoUrl = await uploadedTask.ref.getDownloadURL();
           await _auth.currentUser!.updatePhotoURL(photoUrl);
         });
-
-        final userDoc = await FirebaseFirestore.instance
-            .collection('users')
-            .where('uid', isEqualTo: _auth.currentUser!.uid)
-            .get();
-
-        if (userDoc.docs.isNotEmpty) {
-          userDoc.docs[0].reference.update({
-            "isMale": isMale,
-            "age": int.parse(ageController.text),
-          });
-        }
-
-        print(_auth.currentUser);
       }
+
+      // adding the additional data to the fireStore
+      await FirebaseFirestore.instance.collection('users').add({
+        "isMale": isMale,
+        "age": int.parse(ageController.text),
+        "uid": _auth.currentUser!.uid,
+      });
+      context.router.navigate(const YearlyTodoRoute());
     }
   }
 

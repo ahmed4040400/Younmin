@@ -5,6 +5,7 @@
 // **************************************************************************
 
 import 'package:auto_route/auto_route.dart' as _i7;
+import 'package:cloud_firestore/cloud_firestore.dart' as _i9;
 import 'package:flutter/material.dart' as _i8;
 import 'package:younmin/presentation/home/home.dart' as _i1;
 import 'package:younmin/presentation/login/login.dart' as _i2;
@@ -40,8 +41,13 @@ class YounminRouter extends _i7.RootStackRouter {
           routeData: routeData, child: const _i5.Questions());
     },
     MainPageRoute.name: (routeData) {
+      final args = routeData.argsAs<MainPageRouteArgs>();
       return _i7.AdaptivePage<dynamic>(
-          routeData: routeData, child: const _i6.MainPage());
+          routeData: routeData,
+          child: _i6.MainPage(
+              key: args.key,
+              taskDoc: args.taskDoc,
+              taskOrderNum: args.taskOrderNum));
     }
   };
 
@@ -92,8 +98,26 @@ class QuestionsRoute extends _i7.PageRouteInfo<void> {
 }
 
 /// generated route for [_i6.MainPage]
-class MainPageRoute extends _i7.PageRouteInfo<void> {
-  const MainPageRoute() : super(name, path: '/main');
+class MainPageRoute extends _i7.PageRouteInfo<MainPageRouteArgs> {
+  MainPageRoute(
+      {_i8.Key? key,
+      required _i9.QueryDocumentSnapshot<Map<String, dynamic>> taskDoc,
+      required int taskOrderNum})
+      : super(name,
+            path: '/main',
+            args: MainPageRouteArgs(
+                key: key, taskDoc: taskDoc, taskOrderNum: taskOrderNum));
 
   static const String name = 'MainPageRoute';
+}
+
+class MainPageRouteArgs {
+  const MainPageRouteArgs(
+      {this.key, required this.taskDoc, required this.taskOrderNum});
+
+  final _i8.Key? key;
+
+  final _i9.QueryDocumentSnapshot<Map<String, dynamic>> taskDoc;
+
+  final int taskOrderNum;
 }

@@ -13,6 +13,7 @@ import 'package:younmin/router/router.gr.dart';
 
 TextEditingController _emailController = TextEditingController();
 TextEditingController _passwordController = TextEditingController();
+GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
@@ -33,6 +34,7 @@ class Login extends StatelessWidget {
                     fit: BoxFit.cover)),
             child: Center(
               child: Form(
+                key: formKey,
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -57,7 +59,13 @@ class Login extends StatelessWidget {
                     Flexible(
                       child: ElevatedButton(
                           onPressed: () {
-                            // context.router.navigate(const YearlyTodoRoute());
+                            BlocProvider.of<LoginCubit>(context)
+                                .loginWithEmailAndPassword(
+                              context,
+                              emailController: _emailController,
+                              passwordController: _passwordController,
+                              formKey: formKey,
+                            );
                           },
                           child: Text(
                             LoginStrings.login,

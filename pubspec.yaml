@@ -36,6 +36,7 @@ dependencies:
   cloud_firestore: ^2.5.3
   google_sign_in: ^5.1.1
   flutter_facebook_auth: ^3.5.2
+  http: ^0.13.4
   auto_route: ^2.4.2
   flutter_bloc: ^7.0.0
   file_picker: ^4.1.4
@@ -51,6 +52,8 @@ dependencies:
   syncfusion_flutter_datepicker: ^19.3.44
   percent_indicator: ^3.4.0
   email_validator: ^2.0.1
+  implicitly_animated_reorderable_list: ^0.4.1
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
