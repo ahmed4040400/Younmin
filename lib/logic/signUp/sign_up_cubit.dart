@@ -62,13 +62,22 @@ class SignUpCubit extends Cubit<SignUpState> {
         });
       }
 
+      final userData = result != null
+          ? {
+              "isMale": isMale,
+              "age": int.parse(ageController.text),
+              "photoUrl": _auth.currentUser!.photoURL,
+              "uid": _auth.currentUser!.uid,
+            }
+          : {
+              "isMale": isMale,
+              "age": int.parse(ageController.text),
+              "uid": _auth.currentUser!.uid,
+            };
+
       // adding the additional data to the fireStore
-      await FirebaseFirestore.instance.collection('users').add({
-        "isMale": isMale,
-        "age": int.parse(ageController.text),
-        "uid": _auth.currentUser!.uid,
-      });
-      context.router.navigate(const YearlyTodoRoute());
+      await FirebaseFirestore.instance.collection('users').add(userData);
+      context.router.navigate(YearlyTodoRoute(fistLogin: true));
     }
   }
 

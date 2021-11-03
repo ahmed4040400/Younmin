@@ -12,6 +12,6 @@ import 'package:younmin/presentation/yearlyTodo/yearly_todo.dart';
   AutoRoute(path: "/signUp", page: SignUp),
   AutoRoute(path: "/yearlyTodo", page: YearlyTodo),
   AutoRoute(path: "/questions", page: Questions),
-  AutoRoute(path: "/main", page: MainPage),
+  AutoRoute(path: "main/:id", page: MainPage),
 ])
 class $YounminRouter {}

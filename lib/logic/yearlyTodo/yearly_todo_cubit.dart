@@ -1,14 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../helping_functions.dart';
 
 part 'yearly_todo_state.dart';
 
-final _auth = FirebaseAuth.instance;
-final _db = FirebaseFirestore.instance;
 List<QueryDocumentSnapshot<Map<String, dynamic>>> initState = [];
 
 class YearlyTodoCubit extends Cubit<YearlyTodoState> {
@@ -22,7 +19,6 @@ class YearlyTodoCubit extends Cubit<YearlyTodoState> {
         .get();
 
     emit(YearlyTodoState(yearlyTodoDocs: yearlyTodo.docs));
-    print('called');
   }
 
   void createNewYearlyTodo(context,
@@ -64,5 +60,14 @@ class YearlyTodoCubit extends Cubit<YearlyTodoState> {
     await doc.reference.delete();
     Navigator.pop(context);
     getYearlyTodo();
+  }
+
+  void saveFeeling(context, {required feelingNumber}) async {
+    final userData = await getUserData();
+    userData.docs.first.reference.collection("feelings").add({
+      "feeling": feelingNumber,
+      "date": DateTime.now(),
+    });
+    Navigator.pop(context);
   }
 }

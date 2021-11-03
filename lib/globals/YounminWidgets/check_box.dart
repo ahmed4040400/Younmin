@@ -20,7 +20,7 @@ class _YounminCheckBoxState extends State<YounminCheckBox> {
   @override
   Widget build(BuildContext context) {
     return Transform.scale(
-      scale: widget.size ?? 0.3.sp,
+      scale: widget.size ?? 0.4.sp,
       child: Checkbox(
         checkColor: YounminColors.checkBoxColor,
         value: widget.value,
@@ -28,7 +28,6 @@ class _YounminCheckBoxState extends State<YounminCheckBox> {
         //     .all<Color>(Colors.transparent),
         activeColor: Colors.transparent,
         onChanged: (value) {
-          print('change state');
           setState(() {
             widget.value = value!;
           });

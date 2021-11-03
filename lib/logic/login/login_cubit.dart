@@ -21,7 +21,7 @@ final _auth = FirebaseAuth.instance;
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit() : super(LoginState());
   void loginWithGoogle(BuildContext context) async {
-    ProgressHUD.of(context)!.show();
+    var progress = ProgressHUD.of(context);
     if (_auth.currentUser != null) {
       await _auth.signOut();
     }
@@ -30,6 +30,8 @@ class LoginCubit extends Cubit<LoginState> {
         await googleSignIn.signIn();
 
     if (googleSignInAccount != null) {
+      progress!.show();
+
       final googleAuth = await googleSignInAccount.authentication;
       final credentials = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
@@ -39,7 +41,7 @@ class LoginCubit extends Cubit<LoginState> {
       try {
         await _auth.signInWithCredential(credentials);
       } catch (err) {
-        ProgressHUD.of(context)!.dispose();
+        progress.dismiss();
 
         handleFirebaseError(err, context);
         return;
@@ -49,31 +51,28 @@ class LoginCubit extends Cubit<LoginState> {
         isMale: await isUserMale(googleSignInAccount),
         age: await calculateUserAge(googleSignInAccount),
       );
-      ProgressHUD.of(context)!.dispose();
+      progress.dismiss();
 
-      context.router.navigate(const YearlyTodoRoute());
+      context.router.navigate(YearlyTodoRoute(fistLogin: true));
     }
   }
 
   void loginWithFacebook(BuildContext context) async {
-    ProgressHUD.of(context)!.show();
+    var progress = ProgressHUD.of(context);
 
     if (_auth.currentUser != null) {
       _auth.signOut();
     }
-    final authData = await FacebookAuth.instance.login(permissions: [
-      "public_profile",
-      "user_gender",
-      "email",
-      "user_birthday"
-    ]);
+    final authData = await FacebookAuth.instance.login();
+
+    progress!.show();
 
     final facebookCredential =
         FacebookAuthProvider.credential(authData.accessToken!.token);
     try {
       await _auth.signInWithCredential(facebookCredential);
     } catch (err) {
-      ProgressHUD.of(context)!.dispose();
+      progress.dismiss();
 
       handleFirebaseError(err, context);
       return;
@@ -82,7 +81,8 @@ class LoginCubit extends Cubit<LoginState> {
       isMale: await facebookIsUserMale(authData),
       age: await facebookCalculateUserAge(authData),
     );
-    context.router.navigate(const YearlyTodoRoute());
+    progress.dismiss();
+    context.router.navigate(YearlyTodoRoute(fistLogin: true));
   }
 
   void loginWithEmailAndPassword(BuildContext context,
@@ -90,14 +90,18 @@ class LoginCubit extends Cubit<LoginState> {
       required passwordController,
       required GlobalKey<FormState> formKey}) async {
     if (formKey.currentState!.validate()) {
+      var progress = ProgressHUD.of(context);
+      progress!.show();
       try {
         await _auth.signInWithEmailAndPassword(
             email: emailController.text, password: passwordController.text);
       } catch (err) {
         handleFirebaseError(err, context);
+        progress.dismiss();
         return;
       }
-      context.router.navigate(const YearlyTodoRoute());
+      progress.dismiss();
+      context.router.navigate(YearlyTodoRoute(fistLogin: true));
     }
   }
 

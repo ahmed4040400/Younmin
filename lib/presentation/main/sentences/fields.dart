@@ -85,18 +85,18 @@ class _quantityFieldState extends State<quantityField> {
                 onChanged: (value) {
                   setState(() {
                     if (value) {
-                      quantityHintText = "How many have you heard this from";
-                    } else {
                       quantityHintText = "How many have you said that to";
+                    } else {
+                      quantityHintText = "How many have you heard this from";
                     }
                   });
                   widget.onPersonChanged(value);
                 },
                 rollingInfoRight: const RollingWidgetInfo(
-                    icon: Text('else'),
+                    icon: Text('you'),
                     backgroundColor: YounminColors.darkPrimaryColor),
                 rollingInfoLeft: const RollingWidgetInfo(
-                  icon: Text('you'),
+                  icon: Text('else'),
                   backgroundColor: YounminColors.darkPrimaryColor,
                 ),
               ),

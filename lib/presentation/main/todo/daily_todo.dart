@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,24 +11,15 @@ import 'package:younmin/globals/styles/decoration.dart';
 import 'package:younmin/logic/dailyTodo/daily_todo_cubit.dart';
 import 'package:younmin/presentation/main/todo/daily_todo_tile.dart';
 
+import '../main_page.dart';
 import 'add_todo.dart';
 
-List<String> todayTasks = [
-  "Lorem ipsum",
-  "have coffee",
-  "have breakfast",
-  "go to the gym",
-  "go to work",
-  "watch a spanish movie",
-  "learn 50 words of spanish"
-];
-
-String imageAsset = "assets/images/emoji/1.png";
-
 class DailyTodo extends StatefulWidget {
-  const DailyTodo({Key? key, required this.taskDoc}) : super(key: key);
+  const DailyTodo({Key? key, required this.taskDoc, this.selectedDate})
+      : super(key: key);
 
   final QueryDocumentSnapshot<Map<String, dynamic>> taskDoc;
+  final DateTime? selectedDate;
 
   @override
   _DailyTodoState createState() => _DailyTodoState();
@@ -37,7 +29,7 @@ class _DailyTodoState extends State<DailyTodo> {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<DailyTodoCubit>(context)
-        .getDailyTodo(taskDoc: widget.taskDoc);
+        .getDailyTodo(taskDoc: widget.taskDoc, date: widget.selectedDate);
     return Container(
       decoration: cardBoxDecoration,
       child: Column(
@@ -47,44 +39,46 @@ class _DailyTodoState extends State<DailyTodo> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Expanded(
-                  child: FractionallySizedBox(
-                    widthFactor: 1,
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(maxWidth: 20.w),
-                      child: Text(
-                        "Today's tasks",
-                        style: Theme.of(context).textTheme.headline2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
+                Flexible(
+                  child: Text(
+                    "Today's tasks",
+                    style: Theme.of(context).textTheme.headline2,
+                    overflow: TextOverflow.ellipsis,
                   ),
+                  fit: FlexFit.loose,
                 ),
                 IconButton(
+                  tooltip: "add a task",
                   color: YounminColors.darkPrimaryColor,
                   iconSize: 10.sp,
                   icon: const FaIcon(Icons.add_circle_outline),
                   onPressed: () {
-                    showModalBottomSheet<dynamic>(
-                      backgroundColor: YounminColors.backGroundColor,
-                      shape: RoundedRectangleBorder(
-                        //the rounded corner is created here
-                        borderRadius: BorderRadius.circular(5.sp),
-                      ),
-                      isScrollControlled: true,
-                      context: context,
-                      builder: (_) => BlocProvider.value(
-                          value: BlocProvider.of<DailyTodoCubit>(context),
-                          child: AddTodo(
-                            taskDoc: widget.taskDoc,
-                          )),
-                    );
+                    AwesomeDialog(
+                            context: context,
+                            dialogType: DialogType.SUCCES,
+                            headerAnimationLoop: false,
+                            animType: AnimType.BOTTOMSLIDE,
+                            body: AddTodo(
+                              taskDoc: widget.taskDoc,
+                            ),
+                            btnOkText: "Add task",
+                            btnOkOnPress: () {
+                              BlocProvider.of<DailyTodoCubit>(context)
+                                  .createDailyTodo(context,
+                                      taskDoc: taskDoc,
+                                      todoController: todoController,
+                                      feeling: 1,
+                                      date: widget.selectedDate);
+                            },
+                            btnCancelOnPress: () {})
+                        .show();
                   },
                 )
               ],
             ),
           ),
-          Expanded(
+          Flexible(
+            fit: FlexFit.loose,
             child: BlocBuilder<DailyTodoCubit, DailyTodoState>(
                 builder: (BuildContext context, state) {
               return ImplicitlyAnimatedList(
@@ -105,6 +99,7 @@ class _DailyTodoState extends State<DailyTodo> {
                           taskDoc: widget.taskDoc,
                           item: item,
                           index: index,
+                          selectedDate: widget.selectedDate,
                         ),
                       ));
                 },

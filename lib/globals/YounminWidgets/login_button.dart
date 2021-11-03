@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 import 'package:younmin/globals/Strings/global_strings.dart';
 
 import '../colors.dart';
@@ -18,8 +17,8 @@ class LoginButton extends StatelessWidget {
       style: Theme.of(context).elevatedButtonTheme.style!.copyWith(
             backgroundColor: YounminColors.materialStatePrimaryColor,
             minimumSize: MaterialStateProperty.all<Size>(Size(
-              10.w,
-              6.w,
+              130,
+              40,
             )),
           ),
       onPressed: onPressed,
@@ -28,7 +27,7 @@ class LoginButton extends StatelessWidget {
         style: Theme.of(context)
             .textTheme
             .headline3!
-            .copyWith(fontSize: 5.sp, color: Colors.white),
+            .copyWith(fontSize: 30, color: Colors.white),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 final db = FirebaseFirestore.instance;
 final _auth = FirebaseAuth.instance;
@@ -125,14 +126,49 @@ Future<DocumentReference?> addDataIfFirstTime({isMale, age}) async {
     return db.collection("users").add({
       "uid": _auth.currentUser!.uid,
       "isMale": isMale,
+      "photoUrl": _auth.currentUser!.photoURL,
       "age": age,
     });
   }
 }
 
-Future<QuerySnapshot<Map<String, dynamic>>> getUserData() {
+Future<QuerySnapshot<Map<String, dynamic>>> getUserData({String? uid}) async {
+  await Future.delayed(const Duration(seconds: 1));
   return db
       .collection("users")
-      .where("uid", isEqualTo: _auth.currentUser!.uid)
+      .where("uid", isEqualTo: uid ?? _auth.currentUser!.uid)
       .get();
+}
+
+String today() {
+  final DateTime now = DateTime.now().toUtc();
+  final DateFormat formatter = DateFormat('d');
+  final String formatted = formatter.format(now);
+  return formatted;
+}
+
+String thisMonth() {
+  final DateTime now = DateTime.now().toUtc();
+  final DateFormat formatter = DateFormat('M');
+  final String formatted = formatter.format(now);
+  return formatted;
+}
+
+String thisYear() {
+  final DateTime now = DateTime.now().toUtc();
+  final DateFormat formatter = DateFormat('yyyy');
+  final String formatted = formatter.format(now);
+  return formatted;
+}
+
+String formatDate(Timestamp date) {
+  final DateFormat formatter = DateFormat('yyyy-MM-dd');
+  String formatted = formatter.format(date.toDate());
+  if (formatted == formatter.format(DateTime.now())) {
+    formatted = "today";
+  } else if (formatted ==
+      formatter.format(DateTime.now().subtract(const Duration(days: 1)))) {
+    formatted = "yesterday";
+  }
+  return formatted;
 }

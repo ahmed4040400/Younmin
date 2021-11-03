@@ -45,7 +45,7 @@ class Login extends StatelessWidget {
                         style: Theme.of(context)
                             .textTheme
                             .headline1!
-                            .copyWith(fontSize: 8.sp),
+                            .copyWith(fontSize: 35),
                       ),
                     ),
                     Flexible(child: SizedBox(height: 8.h)),
@@ -72,7 +72,7 @@ class Login extends StatelessWidget {
                             style: Theme.of(context)
                                 .textTheme
                                 .headline3!
-                                .copyWith(fontSize: 7.sp),
+                                .copyWith(fontSize: 25),
                           )),
                     ),
                     Flexible(child: SizedBox(height: 2.h)),
@@ -86,7 +86,7 @@ class Login extends StatelessWidget {
                           style:
                               Theme.of(context).textTheme.headline3!.copyWith(
                                     color: YounminColors.darkPrimaryColor,
-                                    fontSize: 4.sp,
+                                    fontSize: 15,
                                   ),
                         ),
                       ),
@@ -96,7 +96,7 @@ class Login extends StatelessWidget {
                         LoginStrings.loginWith,
                         style: Theme.of(context).textTheme.headline3!.copyWith(
                               color: YounminColors.darkPrimaryColor,
-                              fontSize: 6.sp,
+                              fontSize: 25,
                             ),
                       ),
                     ),
@@ -113,8 +113,8 @@ class Login extends StatelessWidget {
                               FontAwesomeIcons.facebook,
                               color: YounminColors.faceBookColor,
                             ),
-                            iconSize: 5.w,
-                            splashRadius: 2.5.w,
+                            iconSize: 70,
+                            splashRadius: 40,
                             splashColor: YounminColors.primaryColor,
                           ),
                           SizedBox(width: 1.w),
@@ -127,8 +127,8 @@ class Login extends StatelessWidget {
                               FontAwesomeIcons.googlePlus,
                               color: YounminColors.googleColor,
                             ),
-                            iconSize: 5.w,
-                            splashRadius: 2.5.w,
+                            iconSize: 70,
+                            splashRadius: 40,
                             splashColor: YounminColors.primaryColor,
                           ),
                         ],

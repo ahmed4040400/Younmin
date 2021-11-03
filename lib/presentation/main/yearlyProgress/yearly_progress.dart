@@ -10,24 +10,27 @@ class YearlyProgress extends StatelessWidget {
     required this.percentage,
   }) : super(key: key);
 
-  final int percentage;
+  final double percentage;
 
   @override
   Widget build(BuildContext context) {
-    return CircularPercentIndicator(
-      animation: true,
-      radius: 35.sp,
-      lineWidth: 2.sp,
-      percent: percentage / 100,
-      backgroundColor: YounminColors.darkPrimaryColor,
-      progressColor: YounminColors.primaryButtonColor,
-      startAngle: 180,
-      center: Text(
-        percentage.toString() + "%",
-        style: Theme.of(context)
-            .textTheme
-            .headline2!
-            .copyWith(color: Colors.white),
+    return Tooltip(
+      message: 'the progress you\'ve made though this year',
+      child: CircularPercentIndicator(
+        animation: true,
+        radius: 35.sp,
+        lineWidth: 2.7.sp,
+        percent: percentage / 100,
+        backgroundColor: YounminColors.darkPrimaryColor,
+        progressColor: YounminColors.primaryButtonColor,
+        startAngle: 180,
+        center: Text(
+          percentage.toStringAsFixed(2) + "%",
+          style: Theme.of(context)
+              .textTheme
+              .headline2!
+              .copyWith(color: Colors.white),
+        ),
       ),
     );
   }

@@ -12,7 +12,7 @@ class LinearProgress extends StatelessWidget {
     this.textColor = Colors.white,
   }) : super(key: key);
 
-  final int percentage;
+  final double percentage;
   final Color backGroundColor;
   final Color progressColor;
   final Color textColor;
@@ -25,12 +25,12 @@ class LinearProgress extends StatelessWidget {
         padding: EdgeInsets.only(left: 1.5.w),
         child: LinearPercentIndicator(
           animation: true,
-          lineHeight: 8.0,
+          lineHeight: 2.5.sp,
           percent: percentage / 100,
           progressColor: backGroundColor,
           backgroundColor: progressColor,
           trailing: Text(
-            percentage.toString() + "%",
+            percentage.toStringAsFixed(1) + "%",
             style: Theme.of(context)
                 .textTheme
                 .bodyText2!

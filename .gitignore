@@ -33,7 +33,6 @@
 /build/git commit -m "message for the commit"
 
 
-/assets/
 
 # Web related
 lib/generated_plugin_registrant.dart

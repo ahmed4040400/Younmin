@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sizer/sizer.dart';
 import 'package:younmin/globals/Strings/global_strings.dart';
 
 class SignUpButton extends StatelessWidget {
@@ -19,7 +18,7 @@ class SignUpButton extends StatelessWidget {
         style: Theme.of(context)
             .textTheme
             .headline3!
-            .copyWith(fontWeight: FontWeight.bold, fontSize: 6.sp),
+            .copyWith(fontWeight: FontWeight.bold, fontSize: 30),
       ),
     );
   }

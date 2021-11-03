@@ -10,12 +10,17 @@ import 'package:younmin/logic/dailyTodo/daily_todo_cubit.dart';
 
 class DailyTodoTile extends StatelessWidget {
   const DailyTodoTile(
-      {Key? key, this.index, required this.item, required this.taskDoc})
+      {Key? key,
+      this.index,
+      required this.item,
+      required this.taskDoc,
+      this.selectedDate})
       : super(key: key);
 
   final int? index;
   final QueryDocumentSnapshot<Map<String, dynamic>> item;
   final QueryDocumentSnapshot<Map<String, dynamic>> taskDoc;
+  final DateTime? selectedDate;
 
   @override
   Widget build(BuildContext context) {
@@ -32,22 +37,34 @@ class DailyTodoTile extends StatelessWidget {
           builder: (_) => ChooseFeeling(
             onChoosed: (feelingNumber) {
               BlocProvider.of<DailyTodoCubit>(context).changeFeeling(context,
-                  feeling: feelingNumber, todoDoc: item, taskDoc: taskDoc);
+                  feeling: feelingNumber,
+                  todoDoc: item,
+                  taskDoc: taskDoc,
+                  date: selectedDate);
             },
           ),
         );
       },
-      title: SizedBox(
-        width: 8.sp,
-        height: 8.sp,
-        child: Image.asset("assets/images/emoji/${item["feeling"]}.png"),
+      contentPadding: EdgeInsets.zero,
+      title: Align(
+        alignment: Alignment.centerRight,
+        child: SizedBox(
+          width: 10.sp,
+          height: 10.sp,
+          child: Image.asset("assets/images/emoji/${item["feeling"]}.png"),
+        ),
       ),
       minLeadingWidth: 10.w,
-      leading: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: 10.w),
-        child: Text(
-          "${(index ?? -1) + 1}.${item["todo"]}",
-          overflow: TextOverflow.ellipsis,
+      leading: Tooltip(
+        message: "${(index ?? -1) + 1}.${item["todo"]}",
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 12.w),
+          child: Text(
+            "${(index ?? -1) + 1}.${item["todo"]}",
+            overflow: TextOverflow.ellipsis,
+            style:
+                Theme.of(context).textTheme.headline3!.copyWith(fontSize: 5.sp),
+          ),
         ),
       ),
       trailing: Row(
@@ -61,9 +78,11 @@ class DailyTodoTile extends StatelessWidget {
             },
           ),
           IconButton(
+              padding: EdgeInsets.zero,
+              iconSize: 10.sp,
               onPressed: () {
-                BlocProvider.of<DailyTodoCubit>(context)
-                    .deleteDailyTodo(todoDoc: item, taskDoc: taskDoc);
+                BlocProvider.of<DailyTodoCubit>(context).deleteDailyTodo(
+                    todoDoc: item, taskDoc: taskDoc, date: selectedDate);
               },
               icon: const FaIcon(Icons.close)),
         ],

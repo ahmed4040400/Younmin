@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,9 +15,15 @@ import 'package:younmin/globals/styles/text_styles.dart';
 import 'logic/login/login_cubit.dart';
 import 'router/router.gr.dart';
 
+// set this const into true if we want to use firebase emulator for testing
+// before use the emulator should be up and running on the specified ports
+
+// ignore: constant_identifier_names
+const USE_FIREBASE_EMULATOR = false;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   // check if is running on Web
   if (kIsWeb) {
     // initialiaze the facebook javascript SDK
@@ -22,12 +31,18 @@ void main() async {
       // testing app for now
       // use the production id when publishing {250440266907457}
 
-      appId: "477989533261318", //<-- YOUR APP_ID
+      appId: "250440266907457",
       cookie: true,
       xfbml: true,
       version: "v1.0",
     );
   }
+  if (USE_FIREBASE_EMULATOR) {
+    FirebaseFirestore.instance.useFirestoreEmulator("localhost", 8080);
+    FirebaseAuth.instance.useAuthEmulator("127.0.0.1", 9099);
+    FirebaseStorage.instance.useStorageEmulator("127.0.0.1", 9199);
+  }
+
   runApp(MyApp());
 }
 
@@ -55,7 +70,7 @@ class MyApp extends StatelessWidget {
               const ResponsiveBreakpoint.autoScale(2460, name: "4K"),
             ],
           ),
-          title: 'Flutter Demo',
+          title: "Younmin",
           theme: ThemeData(
             scaffoldBackgroundColor: YounminColors.backGroundColor,
             appBarTheme: const AppBarTheme(
@@ -88,7 +103,10 @@ class MyApp extends StatelessWidget {
                 borderSide: BorderSide(color: Colors.red, width: 1.5),
               ),
               errorBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.red, width: 1.5),
+                borderSide: BorderSide(
+                  color: Colors.red,
+                  width: 1.5,
+                ),
               ),
             ),
           ),

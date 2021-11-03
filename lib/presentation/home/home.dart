@@ -30,26 +30,30 @@ class Home extends StatelessWidget {
       appBar: ScrollAppBar(
         automaticallyImplyLeading: false,
         controller: scrollController,
-        toolbarHeight: 10.h, // double
+        toolbarHeight: 80, // double
         title: Padding(
           padding: EdgeInsets.only(top: 2.h),
           child: const LogoButton(),
         ),
         actions: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(right: 2.w, top: 3.h),
-            child: SignUpButton(
-              onPressed: () {
-                context.router.navigate(const SignUpRoute());
-              },
+          Flexible(
+            child: Padding(
+              padding: EdgeInsets.only(right: 2.w, top: 3.h),
+              child: SignUpButton(
+                onPressed: () {
+                  context.router.navigate(const SignUpRoute());
+                },
+              ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(right: 3.w, top: 3.5.h),
-            child: LoginButton(
-              onPressed: () {
-                context.router.navigate(const LoginRoute());
-              },
+          Flexible(
+            child: Padding(
+              padding: EdgeInsets.only(right: 3.w, top: 3.5.h),
+              child: LoginButton(
+                onPressed: () {
+                  context.router.navigate(const LoginRoute());
+                },
+              ),
             ),
           ),
         ],
@@ -57,10 +61,11 @@ class Home extends StatelessWidget {
       body: Scrollbar(
         controller: scrollController,
         child: InViewNotifierList(
+          physics: const ClampingScrollPhysics(),
           controller: scrollController,
           isInViewPortCondition:
               (double deltaTop, double deltaBottom, double vpHeight) {
-            return deltaTop < (0.5 * vpHeight) &&
+            return deltaTop < (0.65 * vpHeight) &&
                 deltaBottom > (0.5 * vpHeight);
           },
           itemCount: 5,
@@ -73,15 +78,14 @@ class Home extends StatelessWidget {
                   return FadeInLeft(
                     animate: animateApproveList[index],
                     child: ResponsiveHomeRow(
-                      alignFromStart: (index + 1) % 2 != 0,
-                      mainText: mainTextStringList[index],
-                      subText: subTextStringList[index],
-                      imageAsset:
-                          AssetImage('assets/images/home/${index + 1}.png'),
-                      mainTextSize: index == 0 ? 15.sp : 10.sp,
-                      mainTextConstraint: index == 0 ? 60.w : 40.w,
-                      subTextConstraint: index == 0 ? 53.w : 35.w,
-                    ),
+                        alignFromStart: (index + 1) % 2 != 0,
+                        mainText: mainTextStringList[index],
+                        subText: subTextStringList[index],
+                        imageAsset:
+                            AssetImage('assets/images/home/${index + 1}.png'),
+                        mainTextSize: index == 0 ? 40 : 30,
+                        mainTextConstraint: index == 0 ? 450 : 350,
+                        subTextConstraint: 500),
                   );
                 }
                 if (index < 4) {
@@ -93,9 +97,9 @@ class Home extends StatelessWidget {
                       subText: subTextStringList[index],
                       imageAsset:
                           AssetImage('assets/images/home/${index + 1}.png'),
-                      mainTextSize: index == 0 ? 15.sp : 10.sp,
-                      mainTextConstraint: index == 0 ? 60.w : 40.w,
-                      subTextConstraint: index == 0 ? 53.w : 35.w,
+                      mainTextSize: index == 0 ? 40 : 30,
+                      mainTextConstraint: index == 0 ? 450 : 400,
+                      subTextConstraint: 500,
                     ),
                   );
                 }
@@ -103,7 +107,7 @@ class Home extends StatelessWidget {
                   padding: EdgeInsets.only(bottom: 15.h),
                   child: FadeInUp(
                     animate: animateApproveList[index],
-                    child: Subscribe(onPressed: () {}),
+                    child: const Subscribe(),
                   ),
                 );
               },

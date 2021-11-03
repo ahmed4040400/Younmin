@@ -78,42 +78,55 @@ class _SignUpState extends State<SignUp> {
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline1!
-                                    .copyWith(fontSize: 8.sp),
+                                    .copyWith(fontSize: 35),
+                                textAlign: TextAlign.center,
                               ),
                             ),
-                            Flexible(child: SizedBox(height: 8.h)),
+                            Flexible(child: SizedBox(height: 50)),
                             Flexible(
-                              child: SizedBox(
-                                  height: 7.h,
-                                  width: 40.w,
-                                  child: FirstNameAndGender(
-                                    controller: firstNameController,
-                                    onGenderChange: (state) {
-                                      isMale = state;
-                                    },
-                                  )),
-                            ),
-                            Flexible(child: SizedBox(height: 3.h)),
-                            Flexible(
-                              child: LastNameAndAge(
-                                lastNameController: lastNameController,
-                                ageController: ageController,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 50),
+                                child: SizedBox(
+                                    height: 70,
+                                    width: 500,
+                                    child: FirstNameAndGender(
+                                      controller: firstNameController,
+                                      onGenderChange: (state) {
+                                        isMale = state;
+                                      },
+                                    )),
                               ),
                             ),
-                            Flexible(child: SizedBox(height: 3.h)),
+                            Flexible(child: SizedBox(height: 20)),
                             Flexible(
-                              child: EmailField(
-                                controller: emailController,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 50),
+                                child: LastNameAndAge(
+                                  lastNameController: lastNameController,
+                                  ageController: ageController,
+                                ),
                               ),
                             ),
-                            Flexible(child: SizedBox(height: 3.h)),
+                            Flexible(child: SizedBox(height: 20)),
                             Flexible(
-                              child: PasswordFields(
-                                passwordController: passwordController,
-                                confirmController: confirmPasswordController,
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 50),
+                                child: EmailField(
+                                  controller: emailController,
+                                ),
                               ),
                             ),
-                            Flexible(child: SizedBox(height: 3.h)),
+                            Flexible(child: SizedBox(height: 20)),
+                            Flexible(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 50),
+                                child: PasswordFields(
+                                  passwordController: passwordController,
+                                  confirmController: confirmPasswordController,
+                                ),
+                              ),
+                            ),
+                            Flexible(child: SizedBox(height: 20)),
                             Flexible(
                               child: ElevatedButton(
                                   onPressed: () {
@@ -136,10 +149,10 @@ class _SignUpState extends State<SignUp> {
                                     style: Theme.of(context)
                                         .textTheme
                                         .headline3!
-                                        .copyWith(fontSize: 7.sp),
+                                        .copyWith(fontSize: 25),
                                   )),
                             ),
-                            Flexible(child: SizedBox(height: 3.h)),
+                            Flexible(child: SizedBox(height: 20)),
                             Flexible(
                               child: Text(
                                 SignUpStrings.alreadyHasAccount,
@@ -148,7 +161,7 @@ class _SignUpState extends State<SignUp> {
                                     .headline3!
                                     .copyWith(
                                       color: YounminColors.darkPrimaryColor,
-                                      fontSize: 5.sp,
+                                      fontSize: 25,
                                     ),
                               ),
                             ),
@@ -164,7 +177,7 @@ class _SignUpState extends State<SignUp> {
                                       .headline3!
                                       .copyWith(
                                         color: YounminColors.darkPrimaryColor,
-                                        fontSize: 4.sp,
+                                        fontSize: 30,
                                       ),
                                 ),
                               ),

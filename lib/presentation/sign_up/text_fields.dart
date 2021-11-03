@@ -25,10 +25,11 @@ class FirstNameAndGender extends StatelessWidget {
       cursorColor: YounminColors.darkPrimaryColor,
       decoration: InputDecoration(
         hintText: SignUpStrings.firstName,
+        isDense: true,
         suffixIcon: Padding(
-          padding: EdgeInsets.all(1.sp),
+          padding: EdgeInsets.all(10),
           child: RollingSwitch.icon(
-            width: 30.sp,
+            width: 70,
             onChanged: onGenderChange,
             rollingInfoRight: const RollingIconInfo(
               icon: Icons.male,
@@ -40,7 +41,7 @@ class FirstNameAndGender extends StatelessWidget {
           ),
         ),
       ),
-      style: Theme.of(context).textTheme.headline3,
+      style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 20),
       validator: (value) {
         if (value!.length < 3) {
           return "First name must be at least 3 characters";
@@ -66,27 +67,33 @@ class LastNameAndAge extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
+        Flexible(
+          child: SizedBox(
+              height: 100,
+              width: 400,
+              child: TextFormField(
+                controller: lastNameController,
+                cursorColor: YounminColors.darkPrimaryColor,
+                decoration: InputDecoration(
+                  isDense: true,
+                  hintText: SignUpStrings.lastName,
+                ),
+                style: Theme.of(context)
+                    .textTheme
+                    .headline3!
+                    .copyWith(fontSize: 20),
+                validator: (value) {
+                  if (value!.length < 3) {
+                    return "Last name must be at least 3 characters";
+                  }
+                  return null;
+                },
+              )),
+        ),
+        SizedBox(width: 30),
         SizedBox(
-            height: 7.h,
-            width: 30.w,
-            child: TextFormField(
-              controller: lastNameController,
-              cursorColor: YounminColors.darkPrimaryColor,
-              decoration: InputDecoration(
-                hintText: SignUpStrings.lastName,
-              ),
-              style: Theme.of(context).textTheme.headline3,
-              validator: (value) {
-                if (value!.length < 3) {
-                  return "Last name must be at least 3 characters";
-                }
-                return null;
-              },
-            )),
-        SizedBox(width: 1.w),
-        SizedBox(
-          height: 7.h,
-          width: 9.w,
+          height: 100,
+          width: 70,
           child: TextFormField(
             controller: ageController,
             keyboardType: TextInputType.number,
@@ -97,8 +104,12 @@ class LastNameAndAge extends StatelessWidget {
                   3), // only 3 numbers can be entered
             ],
             cursorColor: YounminColors.darkPrimaryColor,
-            decoration: InputDecoration(hintText: SignUpStrings.age),
-            style: Theme.of(context).textTheme.headline3,
+            decoration: InputDecoration(
+              hintText: SignUpStrings.age,
+              isDense: true,
+            ),
+            style:
+                Theme.of(context).textTheme.headline3!.copyWith(fontSize: 20),
             validator: (value) {
               if (value!.isEmpty) {
                 return "required";
@@ -126,35 +137,38 @@ class EmailField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 7.h,
-      width: 40.w,
+      height: 100,
+      width: 500,
       child: TextFormField(
         controller: controller,
         cursorColor: YounminColors.darkPrimaryColor,
         decoration: InputDecoration(
             hintText: SignUpStrings.email,
+            isDense: true,
             suffixIcon: BlocBuilder<SignUpCubit, SignUpState>(
               buildWhen: (preState, state) => state.imageFile != null,
               builder: (BuildContext context, state) {
                 if (state.imageFile != null) {
                   return IconButton(
+                    iconSize: 30,
                     tooltip: "profile image",
                     icon: Image.memory(state.imageFile!),
-                    onPressed: () async {
+                    onPressed: () {
                       BlocProvider.of<SignUpCubit>(context).uploadImage();
                     },
                   );
                 }
                 return IconButton(
+                  iconSize: 30,
                   tooltip: "profile image",
                   icon: FaIcon(FontAwesomeIcons.fileImage),
-                  onPressed: () async {
+                  onPressed: () {
                     BlocProvider.of<SignUpCubit>(context).uploadImage();
                   },
                 );
               },
             )),
-        style: Theme.of(context).textTheme.headline3,
+        style: Theme.of(context).textTheme.headline3!.copyWith(fontSize: 20),
         validator: (value) {
           if (value!.isEmpty) return "required";
           if (EmailValidator.validate(value)) {
@@ -183,41 +197,54 @@ class PasswordFields extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        SizedBox(
-            height: 7.h,
-            width: 19.w,
+        Flexible(
+          child: SizedBox(
+              height: 100,
+              width: 250,
+              child: TextFormField(
+                controller: passwordController,
+                obscureText: true,
+                cursorColor: YounminColors.darkPrimaryColor,
+                decoration: InputDecoration(
+                  hintText: SignUpStrings.password,
+                  isDense: true,
+                ),
+                style: Theme.of(context)
+                    .textTheme
+                    .headline3!
+                    .copyWith(fontSize: 20),
+                validator: (value) {
+                  if (value!.length < 6) {
+                    return "Must be at least 6 characters";
+                  }
+                },
+                onChanged: (value) {
+                  password = value;
+                },
+              )),
+        ),
+        SizedBox(width: 2.w),
+        Flexible(
+          child: SizedBox(
+            height: 100,
+            width: 250,
             child: TextFormField(
-              controller: passwordController,
+              controller: confirmController,
               obscureText: true,
               cursorColor: YounminColors.darkPrimaryColor,
-              decoration: InputDecoration(hintText: SignUpStrings.password),
-              style: Theme.of(context).textTheme.headline3,
+              decoration: InputDecoration(
+                hintText: SignUpStrings.confirmPassword,
+                isDense: true,
+              ),
+              style:
+                  Theme.of(context).textTheme.headline3!.copyWith(fontSize: 20),
               validator: (value) {
-                if (value!.length < 6) {
-                  return "Must be at least 6 characters";
+                if (value != password) {
+                  return "must be the same password";
                 }
+                return null;
               },
-              onChanged: (value) {
-                password = value;
-              },
-            )),
-        SizedBox(width: 2.w),
-        SizedBox(
-          height: 7.h,
-          width: 19.w,
-          child: TextFormField(
-            controller: confirmController,
-            obscureText: true,
-            cursorColor: YounminColors.darkPrimaryColor,
-            decoration:
-                InputDecoration(hintText: SignUpStrings.confirmPassword),
-            style: Theme.of(context).textTheme.headline3,
-            validator: (value) {
-              if (value != password) {
-                return "must be the same password";
-              }
-              return null;
-            },
+            ),
           ),
         ),
       ],

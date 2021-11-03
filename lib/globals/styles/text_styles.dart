@@ -5,7 +5,7 @@ import 'package:younmin/globals/colors.dart';
 
 final TextStyle headline1Style = GoogleFonts.fredokaOne(
     textStyle: TextStyle(
-        fontSize: 15.sp,
+        fontSize: 50,
         fontWeight: FontWeight.w900,
         color: YounminColors.textHeadline1Color));
 
@@ -15,7 +15,7 @@ final TextStyle headline2Style = GoogleFonts.lato(
 );
 final TextStyle headline3Style = GoogleFonts.lato(
   textStyle:
-      TextStyle(fontSize: 4.8.sp, color: YounminColors.textHeadline1Color),
+      const TextStyle(fontSize: 20, color: YounminColors.textHeadline1Color),
   fontWeight: FontWeight.w900,
 );
 
@@ -24,7 +24,7 @@ final TextStyle body1 = GoogleFonts.lato(
   fontWeight: FontWeight.w900,
 );
 final TextStyle body2 = GoogleFonts.lato(
-  textStyle: TextStyle(fontSize: 3.sp, color: Colors.black),
+  textStyle: const TextStyle(fontSize: 12, color: Colors.black),
   fontWeight: FontWeight.w900,
 );
 

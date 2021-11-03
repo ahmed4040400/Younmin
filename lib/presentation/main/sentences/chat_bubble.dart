@@ -1,19 +1,24 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sizer/sizer.dart';
 import 'package:younmin/globals/colors.dart';
+import 'package:younmin/logic/sentences/sentences_cubit.dart';
 
 class ChatBubble extends StatelessWidget {
   const ChatBubble(
       {Key? key,
       required this.title,
       required this.subTitle,
-      this.backGroundColor = YounminColors.darkPrimaryColor})
+      this.backGroundColor = YounminColors.darkPrimaryColor,
+      required this.sentenceDoc})
       : super(key: key);
 
   final String title;
   final String subTitle;
   final Color backGroundColor;
+  final QueryDocumentSnapshot<Map<String, dynamic>> sentenceDoc;
 
   @override
   Widget build(BuildContext context) {
@@ -51,18 +56,13 @@ class ChatBubble extends StatelessWidget {
                 children: [
                   IconButton(
                     padding: EdgeInsets.zero,
-                    onPressed: () {},
-                    iconSize: 5.sp,
+                    onPressed: () {
+                      BlocProvider.of<SentencesCubit>(context)
+                          .deleteSentence(sentenceDoc: sentenceDoc);
+                    },
+                    iconSize: 30,
                     splashRadius: 5.sp,
-                    icon: FaIcon(FontAwesomeIcons.edit),
-                    color: Colors.white.withOpacity(0.5),
-                  ),
-                  IconButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {},
-                    iconSize: 5.sp,
-                    splashRadius: 5.sp,
-                    icon: FaIcon(FontAwesomeIcons.trash),
+                    icon: const FaIcon(Icons.close),
                     color: Colors.white.withOpacity(0.5),
                   ),
                 ],

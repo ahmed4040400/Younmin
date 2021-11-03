@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:younmin/globals/Strings/global_strings.dart';
 
 class HomeRow extends StatelessWidget {
   const HomeRow({
@@ -142,15 +141,6 @@ class TheTexts extends StatelessWidget {
           ),
         ),
         SizedBox(height: 2.h),
-        ElevatedButton(
-          onPressed: () {},
-          child: Text(
-            GlobalStrings.learnMore,
-            style: Theme.of(context).textTheme.headline3!.copyWith(
-                  fontSize: 5.8.sp,
-                ),
-          ),
-        )
       ],
     );
   }

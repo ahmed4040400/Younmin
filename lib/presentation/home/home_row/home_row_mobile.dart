@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:younmin/globals/Strings/global_strings.dart';
 
 class HomeRowMobile extends StatelessWidget {
   const HomeRowMobile({
@@ -138,19 +137,11 @@ class TheTexts extends StatelessWidget {
           child: SelectableText(
             subText,
             textAlign: alignFromStart ? TextAlign.left : TextAlign.right,
-            style: Theme.of(context).textTheme.headline3,
+            style:
+                Theme.of(context).textTheme.headline3!.copyWith(fontSize: 16),
           ),
         ),
         SizedBox(height: 2.h),
-        ElevatedButton(
-          onPressed: () {},
-          child: Text(
-            GlobalStrings.learnMore,
-            style: Theme.of(context).textTheme.headline3!.copyWith(
-                  fontSize: 5.8.sp,
-                ),
-          ),
-        )
       ],
     );
   }
